@@ -1,10 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RecordApi.Shared.Services;
+using RecordApi.Shared.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecordApi.Shared.Services.Tests
 {
@@ -14,6 +12,7 @@ namespace RecordApi.Shared.Services.Tests
         private const string CSVFile = "csv-records.txt";
         private const string PipeFile = "pipe-records.txt";
         private const string SpaceFile = "space-records.txt";
+        private const string Path = "./staticdata";
 
         [TestMethod()]
         public void GetDelimiterTest()
@@ -39,7 +38,50 @@ namespace RecordApi.Shared.Services.Tests
         [TestMethod()]
         public void LoadRecordsFromDirectoryTest()
         {
-            Assert.IsTrue(true);
+            //system under test
+            var sut = new FileProcessor();
+            
+            //run test method
+            var testResults = sut.LoadRecordsFromDirectory(Path);
+        
+            //Assert
+            Assert.IsInstanceOfType(testResults,typeof(IEnumerable<IRecord>));
+            Assert.AreEqual(17, testResults.Count());
+
+            //Test one row from each file for valid
+            //PIPE
+            var testRecord = testResults.FirstOrDefault(x => x.LastName == "Brett");
+
+            Assert.AreEqual("Brett", testRecord.LastName);
+            Assert.AreEqual("George", testRecord.FirstName);
+            Assert.AreEqual("hof3000@gmail.com", testRecord.Email);
+            Assert.AreEqual("Blue", testRecord.FavoriteColor);
+            Assert.AreEqual(DateTimeOffset.Parse("01/15/1952"), testRecord.DateOfBirth);
+
+            //CSV
+            testRecord = testResults.FirstOrDefault(x => x.LastName == "Woodson");
+
+            Assert.AreEqual("Woodson", testRecord.LastName);
+            Assert.AreEqual("Rod", testRecord.FirstName);
+            Assert.AreEqual("lightning@gmail.com", testRecord.Email);
+            Assert.AreEqual("Yellow", testRecord.FavoriteColor);
+            Assert.AreEqual(DateTimeOffset.Parse("03/12/1989"), testRecord.DateOfBirth);
+
+            //SPACE
+            testRecord = testResults.FirstOrDefault(x => x.LastName == "Jabbar");
+
+            Assert.AreEqual("Jabbar", testRecord.LastName);
+            Assert.AreEqual("Kareem", testRecord.FirstName);
+            Assert.AreEqual("cap@gmail.com", testRecord.Email);
+            Assert.AreEqual("Orange", testRecord.FavoriteColor);
+            Assert.AreEqual(DateTimeOffset.Parse("03/01/1978"), testRecord.DateOfBirth);
+
+
+            var filtredResults = testResults.OrderBy(r => r.LastName);
+
+
+
+
         }
     }
 }

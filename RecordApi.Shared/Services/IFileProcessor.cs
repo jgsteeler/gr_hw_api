@@ -11,7 +11,9 @@ namespace RecordApi.Shared.Services
     {
 
         IEnumerable<IRecord> Records { get; }
-       
+
+        IEnumerable<IRecord> LoadRecordsFromDirectory(string directory);
+
 
 
 

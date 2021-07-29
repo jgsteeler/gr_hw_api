@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecordApi.Shared.Services
 {
-    public class FileProcessor 
+    public class FileProcessor : IFileProcessor
     {
         private const string Path = "./staticdata";
 
@@ -44,7 +44,7 @@ namespace RecordApi.Shared.Services
             return records.ToArray();
         }
 
-        
+
         public static string GetDelimiter(string filePath)
         {
             var delimiter = string.Empty;
@@ -66,6 +66,6 @@ namespace RecordApi.Shared.Services
             return delimiter;
         }
 
-       
+
     }
 }

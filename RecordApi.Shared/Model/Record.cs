@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RecordApi.Shared.Model
 {
-    class Record : IRecord
+    public class Record : IRecord
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
