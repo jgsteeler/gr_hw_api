@@ -35,5 +35,11 @@ namespace RecordApi.Shared.Services.Tests
             Assert.IsInstanceOfType(testResult, typeof(string));
 
         }
+
+        [TestMethod()]
+        public void LoadRecordsFromDirectoryTest()
+        {
+            Assert.IsTrue(true);
+        }
     }
 }

@@ -11,20 +11,20 @@ namespace RecordApi.Shared.Services
     public class FileProcessor 
     {
         private const string Path = "./staticdata";
-        private IEnumerable<IRecord> _records;
+
         public FileProcessor()
         {
-            _records = LoadRecordsFromDirectory(Path);
+            Records = LoadRecordsFromDirectory(Path);
         }
 
-        public IEnumerable<IRecord> Records => _records;
-        
-        
+        public IEnumerable<IRecord> Records { get; }
+
+
         public IEnumerable<IRecord> LoadRecordsFromDirectory(string directory)
         {
             var records = new List<IRecord>();
 
-            foreach (var filePath in GetFileNames(directory))
+            foreach (var filePath in Directory.GetFiles(directory))
             {
                 var lines = File.ReadAllLines(filePath, Encoding.UTF8);
 
@@ -44,11 +44,7 @@ namespace RecordApi.Shared.Services
             return records.ToArray();
         }
 
-        public string[] GetFileNames(string path)
-        {
-            return Directory.GetFiles(path);
-        }
-
+        
         public static string GetDelimiter(string filePath)
         {
             var delimiter = string.Empty;
