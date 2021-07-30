@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RecordApi.Shared.Services;
 
 namespace RecordApi.WebApi
 {
@@ -32,6 +33,7 @@ namespace RecordApi.WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RecordApi.WebApi", Version = "v1" });
             });
+            services.AddTransient<IFileProcessor, FileProcessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,9 +45,9 @@ namespace RecordApi.WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RecordApi.WebApi v1"));
             }
-
+            
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseAuthorization();
