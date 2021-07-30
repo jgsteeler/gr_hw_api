@@ -47,6 +47,7 @@ namespace RecordApi.WebApi
             }
             
             app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseRouting();
 

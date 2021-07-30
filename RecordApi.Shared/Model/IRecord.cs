@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace RecordApi.Shared.Model
         string FirstName { get; set; }
         string Email { get; set; }
         string FavoriteColor { get; set; }
+        [DataType(DataType.Date)]
         DateTimeOffset DateOfBirth { get; set; }
 
            

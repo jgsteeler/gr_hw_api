@@ -1,9 +1,5 @@
 ﻿using RecordApi.Shared.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecordApi.Shared.Services
 {
@@ -15,8 +11,7 @@ namespace RecordApi.Shared.Services
         IEnumerable<IRecord> LoadRecordsFromDirectory(string directory);
 
 
-
-
-
+       
+        IRecord AddRecord(Record record, char delimiter = ',');
     }
 }

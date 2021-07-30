@@ -9,14 +9,16 @@ namespace RecordApi.Shared.Services
 {
     public class FileProcessor : IFileProcessor
     {
-        private const string Path = "./staticdata";
-
+        private const string DataPath = "./staticdata";
+        private const string CsvFileName = "csv-records.txt";
+        private const string PipeFileName = "pipe-records.txt";
+        private const string SpaceFileName = "space-records.txt";
         public FileProcessor()
         {
-            Records = LoadRecordsFromDirectory(Path);
+            Records = LoadRecordsFromDirectory(DataPath);
         }
 
-        public IEnumerable<IRecord> Records { get; }
+        public IEnumerable<IRecord> Records { get; set; }
 
 
         public IEnumerable<IRecord> LoadRecordsFromDirectory(string directory)
@@ -40,6 +42,30 @@ namespace RecordApi.Shared.Services
             return records.ToArray();
         }
 
+        public IRecord AddRecord(Record record, char delimiter = ',')
+        {
+            //going to add record to csv by default but allow an optional delimiter parameter
+
+            
+            var line = new[]
+            {
+                string.Join(delimiter, record.LastName, record.FirstName, record.Email, record.FavoriteColor,
+                    record.DateOfBirth.ToString("d"))
+            };
+            File.AppendAllLines(Path.Combine(DataPath, GetFileName(delimiter)),line, Encoding.UTF8);
+            Records = LoadRecordsFromDirectory(DataPath);
+            return record;
+
+        }
+
+        public static string GetFileName(char delimiter) =>
+            delimiter switch
+            {
+                ',' => CsvFileName,
+                '|' => PipeFileName,
+                ' ' => SpaceFileName,
+                _ => throw new ArgumentOutOfRangeException(nameof(delimiter), delimiter, null)
+            };
 
         public static string GetDelimiter(string filePath) =>
             filePath switch

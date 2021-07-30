@@ -10,7 +10,7 @@ namespace RecordApi.Shared.Tests.Services
     [TestClass()]
     public class FileProcessorTests
     {
-        private const string CSVFile = "csv-records.txt";
+        private const string CsvFile = "csv-records.txt";
         private const string PipeFile = "pipe-records.txt";
         private const string SpaceFile = "space-records.txt";
         private const string Path = "./staticdata";
@@ -18,7 +18,7 @@ namespace RecordApi.Shared.Tests.Services
         [TestMethod()]
         public void GetDelimiterTest()
         {
-            var testResult = FileProcessor.GetDelimiter(CSVFile);
+            var testResult = FileProcessor.GetDelimiter(CsvFile);
             Assert.AreEqual(",", testResult);
             Assert.IsInstanceOfType(testResult, typeof(string));
 
