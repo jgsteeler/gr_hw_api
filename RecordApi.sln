@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordApi.Shared", "RecordA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordApi.Shared.Tests", "RecordApi.Shared.Tests\RecordApi.Shared.Tests.csproj", "{D9D20807-842F-44CE-8698-FD8C610D4D64}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordApi.WebApi", "RecordApi.WebApi\RecordApi.WebApi.csproj", "{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{D9D20807-842F-44CE-8698-FD8C610D4D64}.Release|x64.Build.0 = Release|Any CPU
 		{D9D20807-842F-44CE-8698-FD8C610D4D64}.Release|x86.ActiveCfg = Release|Any CPU
 		{D9D20807-842F-44CE-8698-FD8C610D4D64}.Release|x86.Build.0 = Release|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Debug|x64.Build.0 = Debug|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Debug|x86.Build.0 = Debug|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Release|x64.ActiveCfg = Release|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Release|x64.Build.0 = Release|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Release|x86.ActiveCfg = Release|Any CPU
+		{91FE1B8E-DE5E-40A5-AA87-82DAC49ADEFB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
