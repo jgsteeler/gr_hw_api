@@ -1,12 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RecordApi.Shared.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RecordApi.Shared.Services.Tests
+namespace RecordApi.Shared.Tests.Services
 {
     [TestClass()]
     public class RecordOutPutServiceTests
@@ -14,6 +9,7 @@ namespace RecordApi.Shared.Services.Tests
         [TestMethod()]
         public void RecordsSortedByColorTest()
         {
+            //Test Output Will List Records as expected.
             var sut = new RecordOutPutService(new FileProcessor());
 
             sut.RecordsSortedByColor();

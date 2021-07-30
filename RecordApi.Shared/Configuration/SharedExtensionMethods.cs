@@ -15,8 +15,7 @@ namespace RecordApi.Shared.Configuration
 
             return builder.ConfigureServices((context, services) => {
 
-                services.AddSingleton<IFileProcessor, FileProcessor>();
-                services.AddSingleton<IRecordOutPutService, RecordOutPutService>();
+               
             
             });
         }

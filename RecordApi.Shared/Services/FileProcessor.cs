@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RecordApi.Shared.Services
 {
@@ -28,44 +27,27 @@ namespace RecordApi.Shared.Services
             {
                 var lines = File.ReadAllLines(filePath, Encoding.UTF8);
 
-                foreach (var line in lines)
-                {
-                    string[] values = line.Split(GetDelimiter(filePath));
-                    records.Add(new Record
+                records.AddRange(lines.Select(line => line.Split(GetDelimiter(filePath)))
+                    .Select(values => new Record
                     {
                         LastName = values[0],
                         FirstName = values[1],
                         Email = values[2],
                         FavoriteColor = values[3],
                         DateOfBirth = DateTimeOffset.Parse(values[4])
-                    });
-                }
+                    }));
             }
             return records.ToArray();
         }
 
 
-        public static string GetDelimiter(string filePath)
-        {
-            var delimiter = string.Empty;
-            switch (filePath)
+        public static string GetDelimiter(string filePath) =>
+            filePath switch
             {
-                case string fileName when fileName.Contains("csv"):
-                    delimiter = ",";
-                    break;
-                case string fileName when fileName.Contains("pipe"):
-                    delimiter = "|";
-                    break;
-                case string fileName when fileName.Contains("space"):
-                    delimiter = " ";
-                    break;
-                default:
-                    break;
-            }
-
-            return delimiter;
-        }
-
-
+                { } fileName when fileName.Contains("csv") => ",",
+                { } fileName when fileName.Contains("pipe") => "|",
+                { } fileName when fileName.Contains("space") => " ",
+                _ => string.Empty
+            };
     }
 }

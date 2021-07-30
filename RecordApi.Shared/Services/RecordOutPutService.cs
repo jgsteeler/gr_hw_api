@@ -8,7 +8,7 @@ namespace RecordApi.Shared.Services
 {
     public class RecordOutPutService : IRecordOutPutService
     {
-        private IFileProcessor _fileProcessor;
+        private readonly IFileProcessor _fileProcessor;
 
         public RecordOutPutService()
         {

@@ -1,20 +1,22 @@
 ﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using RecordApi.Shared.Configuration;
+using RecordApi.Shared.Services;
 
-namespace GenericHostSample
+namespace RecordApi.Runner
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
-            var myService = new RecordApi.Shared.Services.RecordOutPutService();
+            ServiceCollection serviceCollection = new ServiceCollection();
+            
+            serviceCollection.AddSingleton<IFileProcessor, FileProcessor>();
+            serviceCollection.AddSingleton<IRecordOutPutService, RecordOutPutService>();
+            //CreateHostBuilder(args).Build().Run();
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var myService = serviceProvider.GetRequiredService<IRecordOutPutService>();
 
             Console.WriteLine("-- Begin Output to Console Screen--");
             myService.RecordsSortedByColor();
@@ -24,12 +26,6 @@ namespace GenericHostSample
 
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureServices((hostContext, services) =>
-                {
-                   
-                })
-                .AddSharedLibrary();
+       
     }
 }
