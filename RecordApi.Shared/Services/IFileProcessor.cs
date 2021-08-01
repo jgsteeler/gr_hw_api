@@ -6,12 +6,12 @@ namespace RecordApi.Shared.Services
     public interface IFileProcessor
     {
 
-        IEnumerable<IRecord> Records { get; }
+        IEnumerable<Record> Records { get; }
 
-        IEnumerable<IRecord> LoadRecordsFromDirectory(string directory);
+        IEnumerable<Record> LoadRecordsFromDirectory(string directory);
 
 
        
-        IRecord AddRecord(Record record, char delimiter = ',');
+        Record AddRecord(Record record, char delimiter = '*');
     }
 }

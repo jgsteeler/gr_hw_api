@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
@@ -11,7 +12,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace RecordApi.WebApi.Controllers
 {
     [ApiController]
-    [Route("records")]
+    [Route("api/records")]
     public class RecordController : ControllerBase
     {
         private readonly IFileProcessor _fileProcessor;
@@ -26,58 +27,115 @@ namespace RecordApi.WebApi.Controllers
 
         [HttpGet]
         [SwaggerOperation(OperationId = "get-records", Summary = "Get All Records.")]
-        [ProducesResponseType(typeof(IEnumerable<IRecord>[]), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<RecordDto>[]), (int) HttpStatusCode.OK)]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.InternalServerError)]
-        public IEnumerable<IRecord> Get([SwaggerParameter("Last Name ", Required = false)]
+        public IEnumerable<RecordDto> Get([SwaggerParameter("Last Name ", Required = false)]
             string name = "")
         {
             if (name == null || name.Equals(string.Empty))
-                return _fileProcessor.Records.ToArray();
+            {
+                
+                return _fileProcessor.Records.Select(r=> new RecordDto
+                {
+                    LastName  = r.LastName,
+                    FirstName = r.FirstName,
+                    Email = r.Email,
+                    FavoriteColor = r.FavoriteColor,
+                    DateOfBirth = r.DateOfBirth.ToString("d")
+                });
+            }
             else
-                return new List<IRecord> {_fileProcessor.Records.FirstOrDefault(r => r.LastName.ToUpperInvariant() == name.ToUpperInvariant())};
+            {
+                return  new List<RecordDto>
+                {
+
+                    _fileProcessor.Records.Select(selector: r=> new RecordDto
+                    {
+                        LastName  = r.LastName,
+                        FirstName = r.FirstName,
+                        Email = r.Email,
+                        FavoriteColor = r.FavoriteColor,
+                        DateOfBirth = r.DateOfBirth.ToString("d")
+                    }).FirstOrDefault(r => string.Equals(r.LastName, name, StringComparison.InvariantCultureIgnoreCase))
+                };
+
+               
+            }
         }
 
         [HttpGet]
         [Route("color")]
         [SwaggerOperation(OperationId = "get-records-color", Summary = "Get All Records, Sorted By Color.")]
-        [ProducesResponseType(typeof(IEnumerable<IRecord>[]), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<RecordDto>[]), (int) HttpStatusCode.OK)]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.InternalServerError)]
-        public IEnumerable<IRecord> GetByDob()
+        public IEnumerable<RecordDto> GetByDob()
         {
-            return _fileProcessor.Records.OrderBy(r => r.FavoriteColor).ToArray();
+            return _fileProcessor.Records.Select(selector: r => new RecordDto
+            {
+                LastName = r.LastName,
+                FirstName = r.FirstName,
+                Email = r.Email,
+                FavoriteColor = r.FavoriteColor,
+                DateOfBirth = r.DateOfBirth.ToString("d")
+            }).OrderBy(r => r.FavoriteColor);
         }
 
         [HttpGet]
         [Route("birthdate")]
         [SwaggerOperation(OperationId = "get-records-dob", Summary = "Get All Records, Sorted By DOB.")]
-        [ProducesResponseType(typeof(IEnumerable<IRecord>[]), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<RecordDto>[]), (int) HttpStatusCode.OK)]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.InternalServerError)]
-        public IEnumerable<IRecord> GetByColor()
+        public IEnumerable<RecordDto> GetByColor()
         {
-            return _fileProcessor.Records.OrderBy(r => r.DateOfBirth).ToArray();
+            var records = _fileProcessor.Records.OrderBy(r => r.DateOfBirth);
+            
+           return  records.Select(selector: r => new RecordDto
+            {
+                LastName = r.LastName,
+                FirstName = r.FirstName,
+                Email = r.Email,
+                FavoriteColor = r.FavoriteColor,
+                DateOfBirth = r.DateOfBirth.ToString("d")
+            });
         }
 
         [HttpGet]
         [Route("name")]
         [SwaggerOperation(OperationId = "get-records-name", Summary = "Get All Records, Sorted By Last NAme.")]
-        [ProducesResponseType(typeof(IEnumerable<IRecord>[]), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<RecordDto>[]), (int) HttpStatusCode.OK)]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.InternalServerError)]
-        public IEnumerable<IRecord> GetByName()
+        public IEnumerable<RecordDto> GetByName()
         {
-            return _fileProcessor.Records.OrderBy(r => r.LastName).ToArray();
+            return _fileProcessor.Records.Select(selector: r => new RecordDto
+            {
+                LastName = r.LastName,
+                FirstName = r.FirstName,
+                Email = r.Email,
+                FavoriteColor = r.FavoriteColor,
+                DateOfBirth = r.DateOfBirth.ToString("d")
+            }).OrderBy(r => r.LastName);
         }
 
         [HttpPost("")]
-        [ProducesResponseType(typeof(IRecord), (int)HttpStatusCode.Created)]
+        [ProducesResponseType(typeof(RecordDto), (int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.InternalServerError)]
         [SwaggerOperation(OperationId = "add-record", Summary = "Add a new Record")]
-        public ActionResult<IRecord> Add([FromBody][Required(ErrorMessage = "Record is required.")] Record record, [FromQuery]char delimiter = ',')
+        public ActionResult<IRecord> Add([FromBody][Required(ErrorMessage = "Record is required.")] RecordDto record, [FromQuery]char delimiter = '*')
         {
-           
-
-            var ret = _fileProcessor.AddRecord(record, delimiter);
+            if (!DateTimeOffset.TryParse(record.DateOfBirth, out var dob)) return BadRequest(record);
+            
+            var ret = _fileProcessor.AddRecord(new Record
+            {
+                LastName = record.LastName,
+                FirstName = record.FirstName,
+                Email = record.Email,
+                FavoriteColor = record.FavoriteColor,
+                DateOfBirth = dob
+            }, delimiter);
+            
             return Created($"records?name={ret.LastName.ToLowerInvariant()}", ret);
+
 
         }
     }

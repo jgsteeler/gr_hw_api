@@ -13,8 +13,8 @@ namespace RecordApi.Shared.Model
         string FirstName { get; set; }
         string Email { get; set; }
         string FavoriteColor { get; set; }
-        [DataType(DataType.Date)]
-        DateTimeOffset DateOfBirth { get; set; }
+       
+       
 
            
     }

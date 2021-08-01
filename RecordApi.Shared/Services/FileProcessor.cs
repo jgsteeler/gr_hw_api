@@ -18,12 +18,12 @@ namespace RecordApi.Shared.Services
             Records = LoadRecordsFromDirectory(DataPath);
         }
 
-        public IEnumerable<IRecord> Records { get; set; }
+        public IEnumerable<Record> Records { get; set; }
 
 
-        public IEnumerable<IRecord> LoadRecordsFromDirectory(string directory)
+        public IEnumerable<Record> LoadRecordsFromDirectory(string directory)
         {
-            var records = new List<IRecord>();
+            var records = new List<Record>();
 
             foreach (var filePath in Directory.GetFiles(directory))
             {
@@ -42,14 +42,14 @@ namespace RecordApi.Shared.Services
             return records.ToArray();
         }
 
-        public IRecord AddRecord(Record record, char delimiter = ',')
+        public Record AddRecord(Record record, char delimiter = '*')
         {
-            //going to add record to csv by default but allow an optional delimiter parameter
-
+            //going to add record to space by default but allow an optional delimiter parameter
             
-            var line = new[]
+        var line = new[]
             {
-                string.Join(delimiter, record.LastName, record.FirstName, record.Email, record.FavoriteColor,
+               
+                string.Join(delimiter == '*'? ' ': delimiter, record.LastName, record.FirstName, record.Email, record.FavoriteColor,
                     record.DateOfBirth.ToString("d"))
             };
             File.AppendAllLines(Path.Combine(DataPath, GetFileName(delimiter)),line, Encoding.UTF8);
@@ -63,7 +63,7 @@ namespace RecordApi.Shared.Services
             {
                 ',' => CsvFileName,
                 '|' => PipeFileName,
-                ' ' => SpaceFileName,
+                '*' => SpaceFileName,
                 _ => throw new ArgumentOutOfRangeException(nameof(delimiter), delimiter, null)
             };
 
