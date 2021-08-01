@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Records</title>
+
+    <link href="css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+<script src="js/site.js" asp-append-version="true"></script>
+<script src="js/jquery-dateFormat.js"></script>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Records</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="swagger">API Documentation</a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+ 
+
+<div class="container">
+    
+ 
+
+    <div class="row">
+        <div class="col-sm-6">
+            <table id="tblRecord" class="table table-bordered table-condensed table-striped">
+                <caption>List of records</caption>
+                <thead>
+                    <tr>
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Email</th>
+                        <th>Favorite Color</th>
+                        <th>D.O.B.</th>
+                    </tr>
+                </thead>
+                <tbody id="tblRecordBody"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+            Select Sort
+        </div>
+        <div class="col-sm-2">
+            <select id="ddlSort">
+
+                <option value="name">Name</option>
+                <option value="birthdate">Birth Date</option>
+                <option value="color">Favorite Color</option>
+
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="btnAdd">Add New Record</button>
+        </div>
+    </div>
+
+
+
+<div class="modal" id="modAdd" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Enter Record Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col col-md-3 align-content-center">LastName:</div>
+                                <div class="col col-md-3">
+                                    <input type="text" id="lastname">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 align-content-center">First Name </div>
+                                <div class="col-md-3">
+                                    <input type="text" id="firstname">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-3 align-content-center">Email:</div>
+                                <div class="col col-md-3">
+                                    <input type="text" id="email">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 align-content-center">Favorite Color</div>
+                                <div class="col-md-3">
+                                    <input type="text" id="favcolor">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 align-content-center">Birth Date</div>
+                                <div class="col-md-3">
+                                    <input type="text" id="birthdate">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="btnComma">Load to CSV Delimited File</button>
+                        <button type="button" class="btn btn-primary" id="btnPipe">Load to Pipe Delimited File</button>
+                        <button type="button" class="btn btn-primary" id="btnSpace">Load to Space Delimited File</button>
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+﻿Brett|George|hof3000@gmail.com|Blue|01/15/1952
+White|Frank|goldglove8@email.com|Gold|03/22/1964
+Gordon|Alex|hbp_platnum@gmail.com|Red|07/08/1982
+Butler|Billy|bbqbutters@yahoo.com|Brown|12/24/1879
+Sweeny|Mike|sweendog@gmail.com|Yellow|04/12/1967
+Perez|Salvadore|2015mvp@gmail.com|Chrome|05/20/1987
+Wathan|Jon|fastcatcher@gmail.com|PowderBlue|08/19/1958
+zxd|asdf|asd|asd|1/1/2001
+d|d|d|d|1/1/2001
